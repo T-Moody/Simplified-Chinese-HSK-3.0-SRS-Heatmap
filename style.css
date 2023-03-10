@@ -1,0 +1,16 @@
+#grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    grid-gap: 5px;
+  }
+  
+  #grid>div {
+    font-family: 'SimHei';
+    font-size: 15px;
+    padding: .5em;
+    color: black;
+    background: #1c87c9;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+  }
