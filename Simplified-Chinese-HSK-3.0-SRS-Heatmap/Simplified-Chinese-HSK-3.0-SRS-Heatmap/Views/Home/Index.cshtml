@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+ <div id="grid">
+       @foreach(var hskModel in Model)
+       {
+            <div>@hskModel.Character</div>
+       }
+ </div>
