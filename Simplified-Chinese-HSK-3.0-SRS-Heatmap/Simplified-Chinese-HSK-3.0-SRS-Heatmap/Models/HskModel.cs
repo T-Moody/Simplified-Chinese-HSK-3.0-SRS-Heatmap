@@ -6,6 +6,7 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Models
 
         public string? Type { get; set; }
         public string? Level { get; set; }
+        public string? Color { get; set; }
 
         /// <summary>
         /// No Arg constructor.
