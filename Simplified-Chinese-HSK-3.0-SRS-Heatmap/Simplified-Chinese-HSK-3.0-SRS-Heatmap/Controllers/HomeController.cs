@@ -83,7 +83,6 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Controllers
             }
         }
 
-  
         /// <summary>
         /// Get list of characters and days from file and map each character to day.
         /// </summary>
