@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Simplified-Chinese-HSK-3.0-SRS-Heatmap.props" />
-</Project>
