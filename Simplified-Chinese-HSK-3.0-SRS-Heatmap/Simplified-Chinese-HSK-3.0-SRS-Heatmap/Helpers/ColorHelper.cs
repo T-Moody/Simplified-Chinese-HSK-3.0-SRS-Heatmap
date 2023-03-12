@@ -30,6 +30,8 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Helpers
         /// <param name="hskDictionary">Dictionary with characters and days.</param>
         public static void SetHskModelColors(List<HskModel> hskModels, Dictionary<string, int> hskDictionary, int maxDays)
         {
+            string lowOpacityRed = "rgba(255, 0, 0, 0.2)";
+
             foreach (HskModel hskModel in hskModels)
             {
                 int days;
@@ -47,12 +49,12 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Helpers
                     }
                     else if (days == 0)
                     {
-                        hskModel.Color = "rgba(255, 0, 0, 0.2)";
+                        hskModel.Color = lowOpacityRed;
                     }
                 }
                 else
                 {
-                    hskModel.Color = "white";
+                    hskModel.Color = "#" + Color.White.Name.Substring(2);
                 }
             }
         }

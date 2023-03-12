@@ -1,12 +1,12 @@
 ﻿#grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
     grid-gap: 5px;
 }
 
     #grid > div {
         font-family: 'SimHei';
-        font-size: 15px;
+        font-size: 8px;
         padding: .5em;
         color: black;
         background: #1c87c9;
