@@ -1,5 +1,8 @@
-﻿using Simplified_Chinese_HSK_3._0_SRS_Heatmap.infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Data;
+using Simplified_Chinese_HSK_3._0_SRS_Heatmap.infrastructure;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Models;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
@@ -8,6 +11,7 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
     { 
         public readonly string _hskAllFileName = @"wwwroot\files\all_HSK.txt"; // Name of the file constaining hsk values. Each line must use \t as a delimeter. EX of a line: 的 Characters  HSK1
         public readonly string _hskDictionaryFileName = @"wwwroot\files\dictionary_HSK.txt"; // File with characters and days. Delimeter is \t. EX: 的[de5;结构助词的] 
+        public AnkiDbContext _ankiContext;
 
         private string[] _hskAllContext;
         private string[] _hskDictionaryContext;
@@ -15,10 +19,11 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
         /// <summary>
         /// Read in files and create context.
         /// </summary>
-        public HskRepo()
+        public HskRepo(AnkiDbContext ankiContext)
         {
             _hskAllContext = File.ReadAllLines(_hskAllFileName);
             _hskDictionaryContext = File.ReadAllLines(_hskDictionaryFileName);
+            _ankiContext = ankiContext;
         }
 
         /// <summary>
@@ -42,29 +47,12 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
         {
             var hskDictionary = new Dictionary<string, int>();
 
-            foreach (string hskDictionaryLine in _hskDictionaryContext)
+            foreach (CharDays charDaysModel in GetCharDays())
             {
-                AddCurrentLineToDictionary(hskDictionary, hskDictionaryLine);
+                hskDictionary.TryAdd(charDaysModel.Character, charDaysModel.Days);
             }
 
             return hskDictionary;
-        }
-
-        /// <summary>
-        /// Add current hsk line to dictionary.
-        /// </summary>
-        /// <param name="hskDictionary">Current dictionary.</param>
-        /// <param name="hskDictionaryLine">Ex: 的[de5;结构助词的]    33</param>
-        private static void AddCurrentLineToDictionary(Dictionary<string, int> hskDictionary, string hskDictionaryLine)
-        {
-            string removalPattern = @"\s*\[.*?\]\s*";
-            string replacement = "";
-
-            string[] currentLine = hskDictionaryLine.Split('\t');
-            string character = Regex.Replace(currentLine[0], removalPattern, replacement);
-            int days = int.Parse(currentLine[1]);
-
-            hskDictionary.TryAdd(character, days);
         }
 
         /// <summary>
@@ -90,6 +78,24 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
         public int GetMaxDays()
         {
             return _hskDictionaryContext.Select(line => int.Parse(line.Split('\t')[1])).Max();
+        }
+
+        /// <summary>
+        /// Get all characters and days from notes and cards.
+        /// </summary>
+        /// <returns>List of CharDays</returns>
+        public List<CharDays> GetCharDays()
+        {
+            string removalPattern = @"\s*\[.*?\]\s*";
+            string replacement = "";
+
+            List<CharDays> charDaysModels = _ankiContext.Cards
+                .Join(_ankiContext.Notes, card => card.Nid, note => note.Id, 
+                (card, note) => new CharDays(Regex.Replace(note.Sfld, removalPattern, replacement),card.Ivl)).ToList();
+
+            return charDaysModels;
+                       
+            
         }
     }
 }

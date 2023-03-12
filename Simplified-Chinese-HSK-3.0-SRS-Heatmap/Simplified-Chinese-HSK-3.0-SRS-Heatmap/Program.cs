@@ -1,11 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Data;
+using Simplified_Chinese_HSK_3._0_SRS_Heatmap.infrastructure;
+using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Get database connection.
-//builder.Services.AddDbContext<MvcMovieContext>(options =>
-//   options.UseSqlServer(builder.Configuration.GetConnectionString("Chinese-database")));
+//Get database connection.
+builder.Services.AddDbContext<AnkiDbContext>(options =>
+   options.UseSqlite(builder.Configuration.GetConnectionString("database")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IHsk, HskRepo>();
+builder.Services.AddMvc();
 
 var app = builder.Build();
 

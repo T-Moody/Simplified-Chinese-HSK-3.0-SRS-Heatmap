@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Models
 {
     public class HskModel
     {
+        [Key]
+        public int id;
         public string? Character { get; set; }
 
         public string? Type { get; set; }
