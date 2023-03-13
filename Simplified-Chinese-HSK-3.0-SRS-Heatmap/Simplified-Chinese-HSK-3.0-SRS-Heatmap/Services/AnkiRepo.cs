@@ -37,8 +37,6 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
             return hskDictionary;
         }
 
-        
-
         /// <summary>
         /// Get max days after joining chards and notes.
         /// </summary>
