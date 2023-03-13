@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
 {
     public class HskRepo : IHsk
-    { 
+    {
         public readonly string _hskAllFileName = @"wwwroot\files\all_HSK.txt"; // Name of the file constaining hsk values. Each line must use \t as a delimeter. EX of a line: 的 Characters  HSK1
         public readonly string _hskDictionaryFileName = @"wwwroot\files\dictionary_HSK.txt"; // File with characters and days. Delimeter is \t. EX: 的[de5;结构助词的] 
         public AnkiDbContext _ankiContext;
@@ -45,12 +45,14 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
         /// <returns></returns>
         public Dictionary<string, int> GetDictionary()
         {
-            var hskDictionary = new Dictionary<string, int>();
+            string removalPattern = @"\s*\[.*?\]\s*";
+            string replacement = "";
 
-            foreach (CharDays charDaysModel in GetCharDays())
-            {
-                hskDictionary.TryAdd(charDaysModel.Character, charDaysModel.Days);
-            }
+            Dictionary<string, int> hskDictionary = _ankiContext.Cards
+                .Join(_ankiContext.Notes, card => card.Nid, note => note.Id, (card, note) => new { Sfld = note.Sfld, card.Ivl })
+                .AsEnumerable()
+                .GroupBy(x => Regex.Replace(x.Sfld, removalPattern, replacement))
+                .ToDictionary(g => g.Key, g => g.First().Ivl);
 
             return hskDictionary;
         }
@@ -78,24 +80,6 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
         public int GetMaxDays()
         {
             return _hskDictionaryContext.Select(line => int.Parse(line.Split('\t')[1])).Max();
-        }
-
-        /// <summary>
-        /// Get all characters and days from notes and cards.
-        /// </summary>
-        /// <returns>List of CharDays</returns>
-        public List<CharDays> GetCharDays()
-        {
-            string removalPattern = @"\s*\[.*?\]\s*";
-            string replacement = "";
-
-            List<CharDays> charDaysModels = _ankiContext.Cards
-                .Join(_ankiContext.Notes, card => card.Nid, note => note.Id, 
-                (card, note) => new CharDays(Regex.Replace(note.Sfld, removalPattern, replacement),card.Ivl)).ToList();
-
-            return charDaysModels;
-                       
-            
         }
     }
 }
