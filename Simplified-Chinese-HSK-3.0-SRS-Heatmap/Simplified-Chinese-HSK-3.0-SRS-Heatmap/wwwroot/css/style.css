@@ -4,13 +4,31 @@
     grid-gap: 5px;
 }
 
-    #grid > div {
-        font-family: 'SimHei';
-        font-size: 8px;
-        padding: .5em;
-        color: black;
-        background: #1c87c9;
-        text-align: center;
-        height: 30px;
-        width: 30px;
-    }
+#grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    grid-gap: 5px;
+    background-color: lightblue
+}
+
+#grid > div {
+    font-family: 'SimHei';
+    font-size: 8px;
+    padding: .5em;
+    color: black;
+    background: #1c87c9;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+}
+
+#grid2 > div {
+    font-family: 'SimHei';
+    font-size: 8px;
+    padding: .5em;
+    color: black;
+    background: #1c87c9;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+}

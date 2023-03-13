@@ -2,9 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
- <div id="grid">
-       @foreach(var hskModel in Model)
-       {
-            <div style="background-color: @hskModel.Color;">@hskModel.Character</div>
-       }
+
+<h1 class="text-center">HSK1</h1>
+ <div id="grid" title="HSK1">
+@{
+    int counter = 0;
+
+    while (Model[counter].Level == "HSK1")
+    {
+        <div style="background-color: @Model[counter].Color;">@Model[counter].Character</div>
+        counter = counter + 1;
+    }
+} 
+ </div>
+<h1 class="text-center">HSK2</h1>
+<div id="grid2" title="HSK2">
+    @{
+        while (Model[counter].Level == "HSK2")
+        {
+            <div style="background-color: @Model[counter].Color;">@Model[counter].Character</div>
+            counter = counter + 1;
+        }
+    } 
  </div>
