@@ -1,4 +1,4 @@
-﻿#grid {
+﻿.grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
     grid-gap: 5px;
@@ -11,7 +11,7 @@
     background-color: lightblue
 }
 
-#grid > div {
+.grid > div {
     font-family: 'SimHei';
     font-size: 8px;
     padding: .5em;
