@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Get database connection.
 builder.Services.AddDbContext<AnkiDbContext>(options =>
-   options.UseSqlite(builder.Configuration.GetConnectionString("database")));
+   options.UseSqlite(GetDatabaseFile()));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -38,3 +38,36 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+// Dynamically finds the anki database file.
+static string GetDatabaseFile()
+{
+    string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+    string anki2Folder = Path.Combine(appDataFolder, "Anki2");
+    string[] userFolders = Directory.GetDirectories(anki2Folder, "*", SearchOption.TopDirectoryOnly);
+
+    if (userFolders.Length == 0)
+    {
+        Console.WriteLine("Could not find any Anki user folders.");
+        return "";
+    }
+
+
+    string collectionPath = "";
+    int counter = 0;
+    bool found = false;
+
+    while (!found)
+    {
+        collectionPath = Path.Combine(userFolders[counter], "collection.anki2");
+
+        if (File.Exists(collectionPath))
+        {
+            found = true;
+        }
+
+        counter++;
+    }
+
+    return "Filename=" + collectionPath;
+}
