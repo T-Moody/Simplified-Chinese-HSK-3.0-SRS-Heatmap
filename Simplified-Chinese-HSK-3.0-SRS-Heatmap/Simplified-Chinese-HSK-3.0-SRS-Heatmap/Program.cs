@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Data;
+using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Helpers;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.infrastructure;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services;
 using System.Runtime.InteropServices;

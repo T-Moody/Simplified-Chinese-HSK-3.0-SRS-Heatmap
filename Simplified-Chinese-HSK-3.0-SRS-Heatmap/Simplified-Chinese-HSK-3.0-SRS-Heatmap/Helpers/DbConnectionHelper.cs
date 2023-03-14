@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Data
+namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Helpers
 {
     public static class DbConnectionHelper
     {
