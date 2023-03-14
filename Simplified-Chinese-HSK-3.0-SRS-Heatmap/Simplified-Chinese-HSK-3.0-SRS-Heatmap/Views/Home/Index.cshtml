@@ -5,6 +5,9 @@
 @{
     int counter = 0;
     int currentHsk = 1;
+    int modelLength = Model.Count;
+
+    // Loop through all 9 levels and create sections/subsections for each.
     while (currentHsk <= 9)
     {
         string hsk = "HSK" + currentHsk;
@@ -15,7 +18,8 @@
                     <h1 class="text-center">Characters</h1>
                     <div class="grid">
                         @{
-                            while (Model[counter].Level == hsk && Model[counter].Type == "Characters")
+                            // Loop through and create character section.
+                            while (counter < modelLength && Model[counter].Level == hsk && Model[counter].Type == "Characters")
                             {
                                 <div style="background-color: @Model[counter].Color;">@Model[counter].Character</div>
                                 counter = counter + 1;
@@ -27,7 +31,8 @@
                     <h1 class="text-center">Vocabulary</h1>
                     <div class="grid">
                         @{
-                            while (Model[counter].Level == hsk && Model[counter].Type == "Vocabulary")
+                            // Loop through and create vocabulary section.
+                            while (counter < modelLength && Model[counter].Level == hsk && Model[counter].Type == "Vocabulary")
                             {
                                 <div style="background-color: @Model[counter].Color;">@Model[counter].Character</div>
                                 counter = counter + 1;
