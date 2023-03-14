@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AnkiDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IAnki, AnkiRepo>();
 builder.Services.AddTransient<IHsk, HskRepo>();
 builder.Services.AddMvc();
 

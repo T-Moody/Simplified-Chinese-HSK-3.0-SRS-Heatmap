@@ -12,11 +12,13 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAnki _anki;
         private readonly IHsk _hsk;
 
-        public HomeController(ILogger<HomeController> logger, IHsk hsk)
+        public HomeController(ILogger<HomeController> logger, IAnki anki, IHsk hsk)
         {
             _logger = logger;
+            _anki = anki;
             _hsk = hsk;
         }
 
@@ -26,11 +28,11 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Controllers
         /// <returns>View with hskModels.</returns>
         public IActionResult Index()
         {
-            Dictionary<string, int> hskDictionary = _hsk.GetDictionary();
+            Dictionary<string, int> hskDictionary = _anki.GetDictionary();
 
             List<HskModel> hskModels = _hsk.GetAll();
 
-            int maxDays = _hsk.GetMaxDays();
+            int maxDays = _anki.GetMaxDays();
 
             ColorHelper.SetHskModelColors(hskModels, hskDictionary, maxDays);
 
