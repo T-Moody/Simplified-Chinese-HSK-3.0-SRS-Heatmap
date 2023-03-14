@@ -2,12 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Data;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.infrastructure;
 using Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services;
+using System.Runtime.InteropServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Get database connection.
 builder.Services.AddDbContext<AnkiDbContext>(options =>
-   options.UseSqlite(builder.Configuration.GetConnectionString("database")));
+   options.UseSqlite(DbConnectionHelper.GetDatabaseConnectionString()));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
