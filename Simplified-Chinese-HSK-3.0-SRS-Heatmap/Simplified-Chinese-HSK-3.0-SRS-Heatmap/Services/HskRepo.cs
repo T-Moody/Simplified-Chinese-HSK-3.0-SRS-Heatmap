@@ -5,7 +5,7 @@ namespace Simplified_Chinese_HSK_3._0_SRS_Heatmap.Services
 {
     public class HskRepo : IHsk
     {
-        public readonly string _hskAllFileName = @"wwwroot\files\all_HSK.txt"; // Name of the file constaining hsk values. Each line must use \t as a delimeter. EX of a line: 的 Characters  HSK1
+        public readonly string _hskAllFileName = @"wwwroot/files/all_HSK.txt"; // Name of the file constaining hsk values. Each line must use \t as a delimeter. EX of a line: 的 Characters  HSK1
         private string[] _hskAllContext;
 
         /// <summary>
